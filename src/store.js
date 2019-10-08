@@ -11,7 +11,9 @@ const firebaseConfig = {
 	databaseURL: 'https://bibliostore-cfa6f.firebaseio.com',
 	projectId: 'bibliostore-cfa6f',
 	storageBucket: 'bibliostore-cfa6f.appspot.com',
-	messagingSenderId: '1010486545862'
+	messagingSenderId: '1010486545862',
+	appId: '1:1010486545862:web:6f2f3317a4209033f3f6c7',
+	measurementId: 'G-1C3KSEC7NK'
 };
 
 // Inicializar firebase
