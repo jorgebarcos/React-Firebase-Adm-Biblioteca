@@ -65,6 +65,40 @@ class MostrarLibro extends Component {
 
 					{/* Boton para solicitar un prestamo de libro */}
 					{btnPrestamo}
+
+					{/* Muestra las personas que tienen los libros */}
+
+					<h3 className="my-2">Personas que solicitaron prestado el Libro</h3>
+					{libro.prestados.map((prestados) => (
+						<div key={prestados.codigo} className="card my-2">
+							<h4 className="card-he">
+								{prestados.nombre} {prestados.apellido}
+							</h4>
+
+							<div className="card-body">
+								<p>
+									<span className="font-weight-bold">Código:</span> {''} {prestados.codigo}
+								</p>
+								<p>
+									<span className="font-weight-bold">Carrera:</span> {''} {prestados.carrera}
+								</p>
+								<p>
+									<span className="font-weight-bold">Fecha Solicitud:</span> {''}{' '}
+									{prestados.fecha_solicitud}
+								</p>
+							</div>
+
+							<div className="card-footer">
+								<button
+									type="button"
+									className="btn btn-success font-weight-bold"
+									onClick={() => this.devolverLibro(prestados.codigo)}
+								>
+									Realizar Devolución
+								</button>
+							</div>
+						</div>
+					))}
 				</div>
 			</div>
 		);
