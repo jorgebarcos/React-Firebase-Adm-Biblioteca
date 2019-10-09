@@ -5,6 +5,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
+import FichaSuscriptor from '../suscriptores/FichaSuscriptor';
 
 class PrestamoLibro extends Component {
 	state = {
@@ -61,6 +62,22 @@ class PrestamoLibro extends Component {
 		// mostrar el spinner
 		if (!libro) return <Spinner />;
 
+		// extraer los datos del alumno
+		const { noResultados, resultado } = this.state;
+
+		let fichaAlumno, btnSolicitar;
+		if (resultado.nombre) {
+			fichaAlumno = <FichaSuscriptor alumno={resultado} />;
+			btnSolicitar = (
+				<button type="button" className="btn btn-primary btn-block" onClick={this.solicitarPrestamo}>
+					Solicitar Prestamo
+				</button>
+			);
+		} else {
+			fichaAlumno = null;
+			btnSolicitar = null;
+		}
+
 		return (
 			<div className="row">
 				<div className="row">
@@ -76,7 +93,7 @@ class PrestamoLibro extends Component {
 
 						<div className="row justify-content-center mt-5">
 							<div className="col-md-8">
-								<form onSubmit={this.buscarAlumno}>
+								<form onSubmit={this.buscarAlumno} className="mb-4">
 									<legend className="color-primary text-center">
 										Busca el Suscriptor por Código
 									</legend>
@@ -91,6 +108,10 @@ class PrestamoLibro extends Component {
 									</div>
 									<input type="submit" value="Buscar Alumno" className="btn btn-success btn-block" />
 								</form>
+
+								{/* Muestra la ficha del alumno y el botón para solicitar el prestamo */}
+								{fichaAlumno}
+								{btnSolicitar}
 							</div>
 						</div>
 					</div>
