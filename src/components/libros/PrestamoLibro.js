@@ -61,19 +61,28 @@ class PrestamoLibro extends Component {
 
 	// almacena los datos del alumno para solicitar el libro
 	solicitarPrestamo = () => {
-		const suscriptor = this.state.resultado;
+		const { usuario } = this.props;
 
 		// fecha de alta
-		suscriptor.fecha_solicitud = new Date().toLocaleDateString();
+		usuario.fecha_solicitud = new Date().toLocaleDateString();
 
-		// obtener el libro
-		const libroActualizado = this.props.libro;
+		// No se puede mutar los props, tomar una copia y crear un arreglo nuevo
 
-		// agregar el suscriptor al libro
-		libroActualizado.prestados.push(suscriptor);
+		let prestados = [];
+		prestados = [ ...this.props.libro.prestados, usuario ];
 
-		// obtener firestore y history de props
-		const { firestore, history, libro } = this.props;
+		// copiar el objeto y agregar los prestados
+
+		const libro = { ...this.props.libro };
+
+		// eliminar los prestados anteriores
+		delete libro.prestados;
+
+		// asignar los prestados
+		libro.prestados = prestados;
+
+		// extraer firestore
+		const { firestore, history } = this.props;
 
 		// Almacenar en la BD
 		firestore
@@ -82,7 +91,7 @@ class PrestamoLibro extends Component {
 					collection: 'libros',
 					doc: libro.id
 				},
-				libroActualizado
+				libro
 			)
 			.then(history.push('/'));
 	};
