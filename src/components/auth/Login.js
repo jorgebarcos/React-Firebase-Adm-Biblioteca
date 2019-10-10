@@ -10,7 +10,7 @@ class Login extends Component {
 
 	// Iniciar sesión en firebase
 	iniciarSesion = (e) => {
-		e.preventDeafault();
+		e.preventDefault();
 
 		// extraer firebase
 		const { firebase } = this.props;
